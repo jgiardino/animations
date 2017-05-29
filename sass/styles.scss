@@ -231,7 +231,7 @@ main {
 
 .detail {
 
-  display: none;
+  // display: none;
 
   background: $gray-light;
   position: absolute;
@@ -267,11 +267,18 @@ main {
     margin: 0;
     list-style: none;
     display: flex;
+    padding-top: 5px;
+    background: linear-gradient(90deg, $blue, $blue calc(1 / var(--tabs) * 100vw), transparent calc(1 / var(--tabs) * 100vw)) calc(var(--active) / var(--tabs) * 100vw) 0;
+    // variables are set inline via js
+    // calculation that determins background position is active-tab-index * 100 / tabs, so that if the active tab is 2, and there are 3 tabs, then the position is 33vw
+    background-repeat: no-repeat; // if the background repeats then it becomes visible in cases where the last tab is selected and a scrollbar displays
+    transition: background-position 1s;
   }
   li {
     flex: 1 1 auto;
     display: flex;
     min-height: 6em;
+    background: $gray-light;
     a {
       display: flex;
       align-self: stretch;
@@ -282,25 +289,80 @@ main {
     .box {
       width: 2em;
       height: 2em;
+      transition: all 1s;
     }
-    .active {
-      background-image: linear-gradient(to bottom, $blue, $blue 5px, transparent 5px);
+    &.active a {
+      // background-image: linear-gradient(to bottom, $blue, $blue 5px, transparent 5px);
       .box {
         transform: scale(1.8);
+        transition: all 2s;
       }
     }
   }
 }
 
 .detail__content {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 200%;
+  // grid-template-rows: auto;
   background: $gray-light;
-  padding: 1.5em;
   position: relative;
+  .active, .pos, .neg {
+    display: block;
+  }
   .box {
     margin-bottom: 1em;
   }
 }
 
+.pane {
+  display: none;
+  padding: 1.5em;
+  // &.active {
+  //   display: block;
+  // }
+}
+// these panes transition from -100 -> 0
+.active.neg,
+.out.pos {
+  animation: slideright 1s;
+}
+@keyframes slideright {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+// these panes transition from 0 -> -100
+.active.pos,
+.out.neg {
+  animation: slideleft 1s;
+  transform: translateX(-100%);
+}
+@keyframes slideleft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+// .element {
+//   animation: pulse 5s infinite;
+// }
+//
+// @keyframes pulse {
+//   0% {
+//     background-color: #001F3F;
+//   }
+//   100% {
+//     background-color: #FF4136;
+//   }
+// }
 
 // Detail view: Overlay
 

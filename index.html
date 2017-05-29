@@ -36,7 +36,7 @@
 
 
   <main>
-    
+
     <!-- Detail page -->
 
     <div class="detail">
@@ -49,35 +49,40 @@
 
       <div class="detail__body">
         <nav>
-          <ul>
-            <li><a href="#" class="active"><div class="box box--white box--circle"></div></a></li>
+          <ul style="--active:0;--tabs:3;">
+            <li class="active"><a href="#"><div class="box box--white box--circle"></div></a></li>
             <li><a href="#"><div class="box box--white box--circle"></div></a></li>
             <li><a href="#"><div class="box box--white box--circle"></div></a></li>
           </ul>
         </nav>
 
         <div class="detail__content">
-
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-          <div class="box box--gray"></div>
-
-          <div class="overlay">
+          <div class="pane active">
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+          </div>
+          <div class="pane">
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+            <div class="box box--gray"></div>
+          </div>
+          <div class="pane">
 
             <div class="overlay__text">
 
@@ -194,6 +199,30 @@
 
   <div class="box box--gray box--circle"></div>
 -->
+<script>
+// make selected tab and tab contents active
+$(".detail__body nav li").click(function() {
+  $(".out").removeClass("out");
+  $(".pos").removeClass("pos");
+  $(".neg").removeClass("neg");
+  // if indexOf this < indexOf .active
+  let index = $(".detail__body nav li").index(this);
+  let indexActive = $(".detail__body nav li.active").index();
+  if (index < indexActive) {
+    $(".detail__content .active").addClass("out pos").removeClass("active");
+    $(".detail__content .pane:eq(" + index + ")").addClass("active neg");
+  } else if (index > indexActive) {
+    $(".detail__content .active").addClass("out neg").removeClass("active");
+    $(".detail__content .pane:eq(" + index + ")").addClass("active pos");
+  }
+
+  $(".detail__body nav .active").removeClass("active");
+  $(this).addClass("active");
+  $(".detail__body nav ul").each(function() {
+    this.style.setProperty("--active", index);
+  });
+});
+</script>
 
 </body>
 </html>
