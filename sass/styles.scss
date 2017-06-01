@@ -2,9 +2,9 @@
 // Animatioms
 // --------------------------------------------------
 
-$gray-light:      #ededed;
-$gray:            #d1d1d1;
-$gray-dark:       #bbbbbb;
+$gray-light:      darken(#ededed, 10);
+$gray:            darken(#d1d1d1, 10);
+$gray-dark:       darken(#bbbbbb, 10);
 $red:             #cc0000;
 $red-dark:        #a30000;
 $blue:            #39a5dc;
@@ -240,6 +240,7 @@ main {
   height: calc(100vh - 3.5em);
   right: 0;
   z-index: $z-index-detail;
+  overflow-x: hidden; // to prevent scrolling that results from grid-template-columns: 50% 50%; on .detail__content
 }
 
 .detail__header {
@@ -278,7 +279,7 @@ main {
     flex: 1 1 auto;
     display: flex;
     min-height: 6em;
-    background: $gray-light;
+    background: $gray-light; // gradient on ul should be updated to be just the blue above the li, and then this can be removed
     a {
       display: flex;
       align-self: stretch;
@@ -289,13 +290,12 @@ main {
     .box {
       width: 2em;
       height: 2em;
-      transition: all 1s;
     }
     &.active a {
       // background-image: linear-gradient(to bottom, $blue, $blue 5px, transparent 5px);
       .box {
         transform: scale(1.8);
-        transition: all 2s;
+        transition: all 1s;
       }
     }
   }
@@ -319,9 +319,7 @@ main {
 .pane {
   display: none;
   padding: 1.5em;
-  // &.active {
-  //   display: block;
-  // }
+
 }
 // these panes transition from -100 -> 0
 .active.neg,
@@ -335,6 +333,7 @@ main {
   100% {
     transform: translateX(0%);
   }
+
 }
 // these panes transition from 0 -> -100
 .active.pos,
@@ -351,18 +350,6 @@ main {
   }
 }
 
-// .element {
-//   animation: pulse 5s infinite;
-// }
-//
-// @keyframes pulse {
-//   0% {
-//     background-color: #001F3F;
-//   }
-//   100% {
-//     background-color: #FF4136;
-//   }
-// }
 
 // Detail view: Overlay
 
@@ -419,3 +406,22 @@ main {
     padding-top: 100%;
   }
 }
+
+// from mark
+// this could be used to set a variable for number of tabs, instead of using javascript
+// @include media-query (sm) {
+//  width: 25%;
+  //   &:nth-last-child(5),
+  //   &:first-child:nth-last-child(5) ~ li {
+  //     width: 20%;
+  //   }
+  //   &:nth-last-child(6),
+  //   &:first-child:nth-last-child(6) ~ li {
+  //     width: 16.666%;
+  //   }
+  //   &:nth-last-child(7),
+  //   &:first-child:nth-last-child(7) ~ li {
+  //     width: 14.285%;
+  //   }
+  // }
+// instead of "ease-in", Kyle Buchanan and I have found this bezier curve more natural feeling: cubic-bezier(0.465, 0.183, 0.153, 0.946)
